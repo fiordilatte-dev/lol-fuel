@@ -60,6 +60,7 @@ export interface TimelineEvent {
   title: string;
   description: string;
   type: "milestone" | "policy" | "quote" | "event";
+  link?: string;
 }
 
 export interface PainComparison {
