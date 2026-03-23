@@ -17,21 +17,13 @@ export async function fetchQLDPrices(): Promise<QLDFuelPrice[]> {
     const year = new Date().getFullYear();
     const resourceId = RESOURCE_IDS[year] ?? RESOURCE_IDS[2026];
 
-    // Fetch only recent records (last 7 days) to get current prices
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-      .toISOString()
-      .split("T")[0];
-
     const url = new URL(
       "https://www.data.qld.gov.au/api/3/action/datastore_search"
     );
     url.searchParams.set("resource_id", resourceId);
     url.searchParams.set("limit", "5000");
-    url.searchParams.set(
-      "filters",
-      JSON.stringify({ Site_State: "QLD" })
-    );
-    // Get most recent records by sorting descending
+    // Get most recent records by sorting descending — we'll use
+    // the latest entries to calculate current average prices
     url.searchParams.set("sort", "TransactionDateutc desc");
 
     const res = await fetch(url.toString(), { next: { revalidate: 0 } });
@@ -64,14 +56,6 @@ export async function fetchQLDPrices(): Promise<QLDFuelPrice[]> {
       if (isNaN(price)) continue;
 
       const priceCents = price / 10;
-
-      // Only include recent records
-      if (
-        record.TransactionDateutc &&
-        record.TransactionDateutc.split("T")[0] < sevenDaysAgo
-      ) {
-        continue;
-      }
 
       if (!pricesByFuelType[fuelType]) pricesByFuelType[fuelType] = [];
       pricesByFuelType[fuelType].push(priceCents);
