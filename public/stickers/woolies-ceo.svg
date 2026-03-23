@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" fill="none">
+  <!-- Sticker border -->
+  <ellipse cx="60" cy="70" rx="58" ry="68" fill="white" stroke="#00802b" stroke-width="3"/>
+  <!-- Body/blazer -->
+  <path d="M25 120 Q30 95 40 90 Q50 85 60 85 Q70 85 80 90 Q90 95 95 120Z" fill="#2a2a48"/>
+  <!-- Woolworths green lapel pin -->
+  <circle cx="42" cy="98" r="4" fill="#00802b"/>
+  <text x="42" y="100" text-anchor="middle" fill="white" font-size="5" font-weight="bold">W</text>
+  <!-- Shirt -->
+  <path d="M48 90 L60 100 L72 90" fill="white" stroke="white" stroke-width="1"/>
+  <!-- Necklace -->
+  <path d="M45 88 Q60 95 75 88" stroke="#FFD700" stroke-width="1.5" fill="none"/>
+  <!-- Neck -->
+  <rect x="52" y="75" width="16" height="18" rx="4" fill="#f0c8a8"/>
+  <!-- Head -->
+  <ellipse cx="60" cy="55" rx="27" ry="29" fill="#f0c8a8"/>
+  <!-- Hair - styled brown bob -->
+  <path d="M33 52 Q30 25 50 20 Q60 17 70 20 Q90 25 87 52 Q86 38 75 30 Q65 24 55 24 Q42 26 36 35 Q33 42 33 52Z" fill="#5a3018"/>
+  <path d="M33 52 Q31 62 33 72" fill="#5a3018"/>
+  <path d="M87 52 Q89 62 87 72" fill="#5a3018"/>
+  <!-- Side-swept fringe -->
+  <path d="M33 45 Q40 30 55 28 Q45 32 38 42Z" fill="#5a3018"/>
+  <!-- Eyes -->
+  <ellipse cx="48" cy="52" rx="4" ry="4.5" fill="white"/>
+  <ellipse cx="72" cy="52" rx="4" ry="4.5" fill="white"/>
+  <circle cx="49" cy="52.5" r="2.5" fill="#4a7a4a"/>
+  <circle cx="73" cy="52.5" r="2.5" fill="#4a7a4a"/>
+  <circle cx="50" cy="51.5" r="1" fill="white"/>
+  <circle cx="74" cy="51.5" r="1" fill="white"/>
+  <!-- Eyebrows -->
+  <path d="M42 46 Q48 43 54 46" stroke="#3a1808" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M66 46 Q72 43 78 46" stroke="#3a1808" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M58 55 Q60 61 62 55" stroke="#d4a888" stroke-width="1.5" fill="none"/>
+  <!-- Mouth - confident smile -->
+  <path d="M49 66 Q60 74 71 66" stroke="#c06060" stroke-width="2" fill="#e89090" stroke-linecap="round"/>
+  <!-- Earrings -->
+  <circle cx="33" cy="56" r="2.5" fill="#FFD700"/>
+  <circle cx="87" cy="56" r="2.5" fill="#FFD700"/>
+  <!-- Speech bubble -->
+  <path d="M75 12 Q112 5 110 25 Q108 38 92 36 L86 42 L87 34 Q75 30 75 12Z" fill="#00802b"/>
+  <text x="92" y="19" text-anchor="middle" fill="white" font-size="5" font-weight="bold" font-family="monospace">FRESH</text>
+  <text x="92" y="27" text-anchor="middle" fill="white" font-size="5" font-weight="bold" font-family="monospace">PRICES</text>
+  <text x="92" y="35" text-anchor="middle" fill="white" font-size="5" font-weight="bold" font-family="monospace">DAILY!</text>
+  <!-- Label -->
+  <text x="60" y="135" text-anchor="middle" fill="#00802b" font-size="7" font-weight="bold" font-family="sans-serif">WOOLIES CEO</text>
+</svg>
