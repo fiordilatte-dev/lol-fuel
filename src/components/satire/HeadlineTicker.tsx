@@ -7,22 +7,26 @@ const STICKERS = [
   {
     src: "/stickers/prime-minister.svg",
     alt: "PM Sticker",
-    className: "left-[5%] -top-8 -rotate-6",
+    rotate: "-rotate-6",
+    translate: "translate-y-4",
   },
   {
     src: "/stickers/rba-governor.svg",
     alt: "RBA Governor Sticker",
-    className: "left-[30%] -top-10 rotate-3",
+    rotate: "rotate-3",
+    translate: "translate-y-2",
   },
   {
     src: "/stickers/coles-ceo.svg",
     alt: "Coles CEO Sticker",
-    className: "right-[28%] -top-9 -rotate-4",
+    rotate: "-rotate-4",
+    translate: "translate-y-5",
   },
   {
     src: "/stickers/woolies-ceo.svg",
     alt: "Woolworths CEO Sticker",
-    className: "right-[3%] -top-7 rotate-6",
+    rotate: "rotate-6",
+    translate: "translate-y-3",
   },
 ];
 
@@ -30,20 +34,19 @@ export function HeadlineTicker() {
   const doubled = [...SATIRICAL_HEADLINES, ...SATIRICAL_HEADLINES];
 
   return (
-    <div className="relative">
-      {/* Stickers floating on top */}
-      <div className="absolute inset-x-0 top-0 z-10 pointer-events-none hidden md:block">
+    <div>
+      {/* Stickers row — visible on md+ screens */}
+      <div className="hidden md:flex justify-center gap-8 lg:gap-16 xl:gap-24 -mb-6 relative z-10">
         {STICKERS.map((sticker) => (
           <div
             key={sticker.src}
-            className={`absolute ${sticker.className} drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] transition-transform hover:scale-110`}
-            style={{ pointerEvents: "auto" }}
+            className={`${sticker.rotate} ${sticker.translate} drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] hover:scale-110 hover:-translate-y-1 transition-all duration-200 cursor-pointer`}
           >
             <Image
               src={sticker.src}
               alt={sticker.alt}
-              width={80}
-              height={93}
+              width={90}
+              height={105}
               className="select-none"
               draggable={false}
             />
@@ -52,7 +55,7 @@ export function HeadlineTicker() {
       </div>
 
       {/* Ticker */}
-      <div className="w-full overflow-hidden bg-[#1A1A1A] border-y border-[#333333] py-3">
+      <div className="w-full overflow-hidden bg-[#1A1A1A] border-y border-[#333333] py-3 relative">
         <div className="flex animate-[scroll_60s_linear_infinite] whitespace-nowrap">
           {doubled.map((headline, i) => (
             <span key={i} className="mx-8 text-sm font-mono text-[#FF6B00]">
