@@ -10,7 +10,7 @@ const STICKERS = [
     label: "THE PM",
     quote: '"IT\'S A FAIR GO!"',
     rotate: "-rotate-6",
-    translate: "translate-y-4",
+    translate: "translate-y-1",
   },
   {
     src: "/stickers/rba-governor.jpg",
@@ -18,7 +18,7 @@ const STICKERS = [
     label: "RBA GOV",
     quote: '"RATE HIKE!"',
     rotate: "rotate-3",
-    translate: "translate-y-2",
+    translate: "translate-y-0",
   },
   {
     src: "/stickers/coles-ceo.png",
@@ -26,7 +26,7 @@ const STICKERS = [
     label: "COLES CEO",
     quote: '"DOWN DOWN!"',
     rotate: "-rotate-4",
-    translate: "translate-y-5",
+    translate: "translate-y-2",
   },
   {
     src: "/stickers/woolies-ceo.png",
@@ -34,7 +34,7 @@ const STICKERS = [
     label: "WOOLIES CEO",
     quote: '"FRESH PRICES!"',
     rotate: "rotate-5",
-    translate: "translate-y-3",
+    translate: "translate-y-1",
   },
 ];
 
@@ -44,16 +44,16 @@ export function HeadlineTicker() {
   return (
     <div>
       {/* Stickers row — visible on md+ screens */}
-      <div className="hidden md:flex justify-center gap-6 lg:gap-12 xl:gap-20 -mb-5 relative z-10">
+      <div className="hidden md:flex justify-center gap-6 lg:gap-12 xl:gap-20 -mb-2 relative z-10">
         {STICKERS.map((sticker) => (
           <div
             key={sticker.src}
             className={`${sticker.rotate} ${sticker.translate} hover:scale-110 hover:!-translate-y-1 hover:!rotate-0 transition-all duration-200 cursor-pointer group`}
           >
             {/* Sticker container — die-cut style */}
-            <div className="relative bg-white rounded-2xl p-1.5 pb-0 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+            <div className="relative bg-white rounded-xl p-1 pb-0 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
               {/* Photo */}
-              <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-xl overflow-hidden relative">
+              <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-xl overflow-hidden relative">
                 <Image
                   src={sticker.src}
                   alt={sticker.alt}
@@ -71,8 +71,8 @@ export function HeadlineTicker() {
               </div>
 
               {/* Label */}
-              <div className="bg-white text-center py-1 rounded-b-xl">
-                <span className="text-[10px] lg:text-xs font-black tracking-wider text-[#1a1a1a] uppercase">
+              <div className="bg-white text-center py-0.5 rounded-b-lg">
+                <span className="text-[8px] lg:text-[10px] font-black tracking-wider text-[#1a1a1a] uppercase">
                   {sticker.label}
                 </span>
               </div>
