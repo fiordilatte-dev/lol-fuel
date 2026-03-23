@@ -5,27 +5,35 @@ import { SATIRICAL_HEADLINES } from "@/content/headlines";
 
 const STICKERS = [
   {
-    src: "/stickers/prime-minister.svg",
-    alt: "PM Sticker",
+    src: "/stickers/prime-minister.jpg",
+    alt: "Anthony Albanese",
+    label: "THE PM",
+    quote: '"IT\'S A FAIR GO!"',
     rotate: "-rotate-6",
     translate: "translate-y-4",
   },
   {
-    src: "/stickers/rba-governor.svg",
-    alt: "RBA Governor Sticker",
+    src: "/stickers/rba-governor.jpg",
+    alt: "Michele Bullock",
+    label: "RBA GOV",
+    quote: '"RATE HIKE!"',
     rotate: "rotate-3",
     translate: "translate-y-2",
   },
   {
-    src: "/stickers/coles-ceo.svg",
-    alt: "Coles CEO Sticker",
+    src: "/stickers/coles-ceo.png",
+    alt: "Leah Weckert",
+    label: "COLES CEO",
+    quote: '"DOWN DOWN!"',
     rotate: "-rotate-4",
     translate: "translate-y-5",
   },
   {
-    src: "/stickers/woolies-ceo.svg",
-    alt: "Woolworths CEO Sticker",
-    rotate: "rotate-6",
+    src: "/stickers/woolies-ceo.png",
+    alt: "Amanda Bardwell",
+    label: "WOOLIES CEO",
+    quote: '"FRESH PRICES!"',
+    rotate: "rotate-5",
     translate: "translate-y-3",
   },
 ];
@@ -36,20 +44,39 @@ export function HeadlineTicker() {
   return (
     <div>
       {/* Stickers row — visible on md+ screens */}
-      <div className="hidden md:flex justify-center gap-8 lg:gap-16 xl:gap-24 -mb-6 relative z-10">
+      <div className="hidden md:flex justify-center gap-6 lg:gap-12 xl:gap-20 -mb-5 relative z-10">
         {STICKERS.map((sticker) => (
           <div
             key={sticker.src}
-            className={`${sticker.rotate} ${sticker.translate} drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] hover:scale-110 hover:-translate-y-1 transition-all duration-200 cursor-pointer`}
+            className={`${sticker.rotate} ${sticker.translate} hover:scale-110 hover:!-translate-y-1 hover:!rotate-0 transition-all duration-200 cursor-pointer group`}
           >
-            <Image
-              src={sticker.src}
-              alt={sticker.alt}
-              width={90}
-              height={105}
-              className="select-none"
-              draggable={false}
-            />
+            {/* Sticker container — die-cut style */}
+            <div className="relative bg-white rounded-2xl p-1.5 pb-0 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+              {/* Photo */}
+              <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-xl overflow-hidden relative">
+                <Image
+                  src={sticker.src}
+                  alt={sticker.alt}
+                  fill
+                  className="object-cover object-top select-none"
+                  draggable={false}
+                  sizes="96px"
+                />
+              </div>
+
+              {/* Speech bubble — appears on hover */}
+              <div className="absolute -top-8 -right-4 bg-[#FF6B00] text-white text-[10px] font-bold font-mono px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-lg pointer-events-none">
+                {sticker.quote}
+                <div className="absolute bottom-0 left-4 translate-y-full w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[5px] border-t-[#FF6B00]" />
+              </div>
+
+              {/* Label */}
+              <div className="bg-white text-center py-1 rounded-b-xl">
+                <span className="text-[10px] lg:text-xs font-black tracking-wider text-[#1a1a1a] uppercase">
+                  {sticker.label}
+                </span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
