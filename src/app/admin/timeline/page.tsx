@@ -17,21 +17,28 @@ export default function AdminTimeline() {
   const [type, setType] = useState<TimelineEvent["type"]>("milestone");
   const [link, setLink] = useState("");
 
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${secret}`,
-  };
+  // Build headers fresh each call so secret is never stale
+  function getHeaders(currentSecret: string) {
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${currentSecret}`,
+    };
+  }
 
-  async function fetchEvents() {
+  async function fetchEvents(overrideSecret?: string) {
+    const s = overrideSecret ?? secret;
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/timeline", { headers });
+      const res = await fetch("/api/admin/timeline", {
+        headers: getHeaders(s),
+      });
       if (!res.ok) throw new Error("Unauthorized");
       const data = await res.json();
       setEvents(data.events);
       setAuthenticated(true);
+      setMessage("");
     } catch {
-      setMessage("Authentication failed. Check your secret.");
+      setMessage("Authentication failed. Check your secret and ensure ADMIN_SECRET is set in Vercel env vars.");
       setAuthenticated(false);
     }
     setLoading(false);
@@ -41,7 +48,7 @@ export default function AdminTimeline() {
     setLoading(true);
     const res = await fetch("/api/admin/timeline", {
       method: "POST",
-      headers,
+      headers: getHeaders(secret),
       body: JSON.stringify({ action: "seed" }),
     });
     const data = await res.json();
@@ -62,7 +69,7 @@ export default function AdminTimeline() {
     };
     const res = await fetch("/api/admin/timeline", {
       method: "POST",
-      headers,
+      headers: getHeaders(secret),
       body: JSON.stringify({ event }),
     });
     const data = await res.json();
@@ -85,7 +92,7 @@ export default function AdminTimeline() {
     setLoading(true);
     const res = await fetch("/api/admin/timeline", {
       method: "DELETE",
-      headers,
+      headers: getHeaders(secret),
       body: JSON.stringify({ date, title }),
     });
     const data = await res.json();
@@ -108,11 +115,11 @@ export default function AdminTimeline() {
             placeholder="Enter admin secret"
             value={secret}
             onChange={(e) => setSecret(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && fetchEvents()}
+            onKeyDown={(e) => e.key === "Enter" && fetchEvents(secret)}
             className="w-full px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#333333] text-[#FAFAFA] placeholder-[#666]"
           />
           <button
-            onClick={fetchEvents}
+            onClick={() => fetchEvents(secret)}
             disabled={loading}
             className="w-full py-3 rounded-lg bg-[#FF6B00] text-white font-semibold hover:bg-[#ff8c3a] transition-colors disabled:opacity-50"
           >
@@ -146,7 +153,7 @@ export default function AdminTimeline() {
               Seed from static
             </button>
             <button
-              onClick={fetchEvents}
+              onClick={() => fetchEvents()}
               disabled={loading}
               className="px-4 py-2 rounded-lg border border-[#333333] text-[#888888] text-sm hover:text-[#FAFAFA] hover:border-[#666] transition-colors disabled:opacity-50"
             >
