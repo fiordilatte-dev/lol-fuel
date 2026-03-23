@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { FuelPriceData } from "@/types";
 
-// Mock data for development — replaced by KV reads in production
+// Mock data used as fallback when no live data is cached
 const MOCK_DATA: FuelPriceData = {
   lastUpdated: new Date().toISOString(),
   national: {
@@ -30,13 +30,27 @@ const MOCK_DATA: FuelPriceData = {
 };
 
 export async function GET() {
-  // In production, read from Vercel KV:
-  // const data = await getCurrentPrices();
-  // if (!data) return NextResponse.json({ error: "No data" }, { status: 503 });
+  // Try to read live data from KV if available
+  try {
+    const { getCurrentPrices } = await import("@/lib/kv");
+    const data = await getCurrentPrices();
+    if (data) {
+      return NextResponse.json(data, {
+        headers: {
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
+          "X-Data-Source": "live",
+        },
+      });
+    }
+  } catch {
+    // KV not configured — fall through to mock data
+  }
 
+  // Fallback to mock data
   return NextResponse.json(MOCK_DATA, {
     headers: {
       "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
+      "X-Data-Source": "mock",
     },
   });
 }
