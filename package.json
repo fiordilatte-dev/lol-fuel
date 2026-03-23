@@ -10,7 +10,7 @@
     "seed": "npx tsx scripts/seed-history.ts"
   },
   "dependencies": {
-    "@vercel/kv": "^3.0.0",
+    "@upstash/redis": "^1.37.0",
     "@vercel/og": "^0.11.1",
     "@vercel/postgres": "^0.10.0",
     "framer-motion": "^12.38.0",

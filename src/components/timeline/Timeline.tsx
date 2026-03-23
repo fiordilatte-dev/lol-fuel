@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { TIMELINE_EVENTS } from "@/content/timeline";
+import { TimelineEvent } from "@/types";
 
 const TYPE_COLORS = {
   milestone: "border-[#FF6B00]",
@@ -17,8 +19,23 @@ const TYPE_LABELS = {
 };
 
 export function Timeline() {
+  const [events, setEvents] = useState<TimelineEvent[]>(TIMELINE_EVENTS);
+
+  useEffect(() => {
+    fetch("/api/timeline")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.events && Array.isArray(data.events) && data.events.length > 0) {
+          setEvents(data.events);
+        }
+      })
+      .catch(() => {
+        // Keep static fallback on error
+      });
+  }, []);
+
   // Sort most recent first
-  const sorted = [...TIMELINE_EVENTS].sort(
+  const sorted = [...events].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
