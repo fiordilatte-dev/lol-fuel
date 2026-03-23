@@ -12,6 +12,7 @@ import { PainIndex } from "@/components/satire/PainIndex";
 import { BlameOMeter } from "@/components/satire/BlameOMeter";
 import { Timeline } from "@/components/timeline/Timeline";
 import { Container } from "@/components/ui/Container";
+import { Stickers } from "@/components/satire/Stickers";
 
 export default function Home() {
   const { prices, isLoading } = useFuelPrices();
@@ -36,27 +37,34 @@ export default function Home() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="min-h-[60vh] flex flex-col items-center justify-center py-16 px-4">
-        <h1 className="text-xl md:text-2xl font-bold text-[#FF6B00] mb-8 tracking-tight">
-          FuelWatch Australia
-        </h1>
-        <PriceTicker
-          priceCents={nationalPrice}
-          lastUpdated={prices.lastUpdated}
-          fuelTypeLabel={FUEL_TYPE_LABELS[selectedFuel]}
-        />
-        <div className="mt-4">
-          <PriceChangeIndicator
-            change={
-              Object.values(prices.states).reduce(
-                (sum, s) => sum + s.change24h,
-                0
-              ) / Object.values(prices.states).length
-            }
+      <section className="min-h-[60vh] flex items-center justify-center py-16 px-4 relative">
+        <div className="flex flex-col items-center">
+          <h1 className="text-xl md:text-2xl font-bold text-[#FF6B00] mb-8 tracking-tight">
+            FuelWatch Australia
+          </h1>
+          <PriceTicker
+            priceCents={nationalPrice}
+            lastUpdated={prices.lastUpdated}
+            fuelTypeLabel={FUEL_TYPE_LABELS[selectedFuel]}
           />
+          <div className="mt-4">
+            <PriceChangeIndicator
+              change={
+                Object.values(prices.states).reduce(
+                  (sum, s) => sum + s.change24h,
+                  0
+                ) / Object.values(prices.states).length
+              }
+            />
+          </div>
+          <div className="mt-8">
+            <FuelTypeToggle selected={selectedFuel} onSelect={setSelectedFuel} />
+          </div>
         </div>
-        <div className="mt-8">
-          <FuelTypeToggle selected={selectedFuel} onSelect={setSelectedFuel} />
+
+        {/* Stickers — right corner */}
+        <div className="absolute right-4 lg:right-8 xl:right-16 top-1/2 -translate-y-1/2">
+          <Stickers />
         </div>
       </section>
 
