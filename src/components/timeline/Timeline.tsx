@@ -23,14 +23,17 @@ export function Timeline() {
 
   useEffect(() => {
     fetch("/api/timeline")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
       .then((data) => {
         if (data.events && Array.isArray(data.events) && data.events.length > 0) {
           setEvents(data.events);
         }
       })
-      .catch(() => {
-        // Keep static fallback on error
+      .catch((err) => {
+        console.error("Timeline fetch failed:", err);
       });
   }, []);
 
