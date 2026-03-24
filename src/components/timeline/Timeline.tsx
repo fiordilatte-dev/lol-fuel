@@ -1,7 +1,3 @@
-"use client";
-
-import useSWR from "swr";
-import { TIMELINE_EVENTS } from "@/content/timeline";
 import { TimelineEvent } from "@/types";
 
 const TYPE_COLORS = {
@@ -18,23 +14,7 @@ const TYPE_LABELS = {
   event: "Event",
 };
 
-const fetcher = (url: string) =>
-  fetch(url).then((res) => {
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
-  });
-
-export function Timeline() {
-  const { data } = useSWR<{ events: TimelineEvent[] }>(
-    "/api/timeline",
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      dedupingInterval: 60000,
-    }
-  );
-
-  const events = data?.events && data.events.length > 0 ? data.events : TIMELINE_EVENTS;
+export function Timeline({ events }: { events: TimelineEvent[] }) {
 
   // Sort most recent first
   const sorted = [...events].sort(
