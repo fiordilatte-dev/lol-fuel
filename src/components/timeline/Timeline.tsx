@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import { TIMELINE_EVENTS } from "@/content/timeline";
 import { TimelineEvent } from "@/types";
 
@@ -18,24 +18,24 @@ const TYPE_LABELS = {
   event: "Event",
 };
 
-export function Timeline() {
-  const [events, setEvents] = useState<TimelineEvent[]>(TIMELINE_EVENTS);
+const fetcher = (url: string) =>
+  fetch(url).then((res) => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  });
 
-  useEffect(() => {
-    fetch("/api/timeline")
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        if (data.events && Array.isArray(data.events) && data.events.length > 0) {
-          setEvents(data.events);
-        }
-      })
-      .catch((err) => {
-        console.error("Timeline fetch failed:", err);
-      });
-  }, []);
+export function Timeline() {
+  const { data } = useSWR<{ events: TimelineEvent[] }>(
+    "/api/timeline",
+    fetcher,
+    {
+      fallbackData: { events: TIMELINE_EVENTS },
+      revalidateOnFocus: false,
+      dedupingInterval: 60000,
+    }
+  );
+
+  const events = data?.events ?? TIMELINE_EVENTS;
 
   // Sort most recent first
   const sorted = [...events].sort(
