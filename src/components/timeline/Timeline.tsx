@@ -29,13 +29,12 @@ export function Timeline() {
     "/api/timeline",
     fetcher,
     {
-      fallbackData: { events: TIMELINE_EVENTS },
       revalidateOnFocus: false,
       dedupingInterval: 60000,
     }
   );
 
-  const events = data?.events ?? TIMELINE_EVENTS;
+  const events = data?.events && data.events.length > 0 ? data.events : TIMELINE_EVENTS;
 
   // Sort most recent first
   const sorted = [...events].sort(
